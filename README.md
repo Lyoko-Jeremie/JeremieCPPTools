@@ -9,7 +9,7 @@ Jeremie's C++ Tools Lib
 所有工具均使用C++11标准，多线程库全部基于C++11的PThread模型，Socket、CmdAnalyzeTools、FileList库依赖windowsAPI
 
 
-多线程类：多读者多写者锁RWLock、读写同步锁RWABLock、可重入路障Barrier
+多线程类：多读者多写者锁RWLock、读写同步锁RWABLock、可重入路障Barrier、线程池实现的std::async/get异步任务托管
 
 Socket：WinSocketPack 为了便于使用封装了ws2_32的基本API并实现可重入与多线程安全
 
