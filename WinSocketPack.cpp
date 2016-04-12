@@ -251,7 +251,7 @@ bool WinSocketPack::Shutdown(size_t i, WSP_SHUTDOWN how) throw( out_of_range, ba
 // 创建新Socket 返回池内句柄id
 size_t WinSocketPack::NewSocket(WSP_AF af, WSP_TYPE type, WSP_PROTOCOL protocol) throw( runtime_error, overflow_error, bad_exception )
 {
-    SOCKET socks=socket( AF_INET, SOCK_STREAM, 0);
+    SOCKET socks=socket( af, type, protocol);
     if ( INVALID_SOCKET == socks)
     {
         stringstream ss("socket NewSocket INVALID_SOCKET ");
@@ -266,7 +266,7 @@ size_t WinSocketPack::NewSocket(WSP_AF af, WSP_TYPE type, WSP_PROTOCOL protocol)
 // 创建新Socket 返回池内句柄编号
 size_t WinSocketPack::NewSocketTCP() throw( runtime_error, overflow_error, bad_exception )
 {
-    return this->NewSocket( WSP_AF::WSP_AF_INET, WSP_TYPE::WSP_SOCK_STREAM, WSP_PROTOCOL::WSP_IPPROTO_IP );
+    return this->NewSocket( WSP_AF::WSP_AF_INET, WSP_TYPE::WSP_SOCK_STREAM, WSP_PROTOCOL::WSP_IPPROTO_TCP );
 }
 
 
