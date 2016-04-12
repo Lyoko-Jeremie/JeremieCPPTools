@@ -74,7 +74,7 @@ class WinSocketPack
 
         };
 
-        enum class WSP_TYPE {
+        enum WSP_TYPE {
 
             WSP_SOCK_STREAM = 1,
             WSP_SOCK_DGRAM = 2,
@@ -84,7 +84,7 @@ class WinSocketPack
 
         };
 
-        enum class WSP_PROTOCOL {
+        enum WSP_PROTOCOL {
 
             WSP_IPPROTO_IP = 0,
             WSP_IPPROTO_HOPOPTS = 0,
