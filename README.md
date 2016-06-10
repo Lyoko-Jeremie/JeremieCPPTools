@@ -27,7 +27,7 @@ Socket：
 
 FreeTypeTextPrinter：
 	基于FreeType的OpenCV字符绘制库，解决OpenCV无法在图像上绘制中文字符的问题
-	仅仅依赖于FreeType、OpenCV、C++11，在FreeType2.6.2、OpenCV2.4.11、OpenCV3.1.0下测试通过，性能大概是3-5字符/ms
+	仅仅依赖于FreeType、OpenCV、C++11，在FreeType2.6.2、OpenCV2.4.11、OpenCV3.1.0下测试通过
 
 
 
