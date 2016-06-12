@@ -1,4 +1,4 @@
-#include "FreeTypeTextPrinter.h"
+ï»¿#include "FreeTypeTextPrinter.h"
 
 
 FreeTypeTextPrinter::FreeTypeTextPrinter(std::string font_file)
@@ -23,7 +23,7 @@ bool FreeTypeTextPrinter::Set_Char_Size(FT_F26Dot6 char_width, FT_F26Dot6 char_h
 {
 	if (FT_Err_Ok == FT_Set_Char_Size(ft_face_, char_width, char_height, horz_resolution, vert_resolution))
 	{
-		// »ñÈ¡AµÄ¿í¶È×÷Îª¿Õ¸ñ¿í¶È
+		// è·å–Açš„å®½åº¦ä½œä¸ºç©ºæ ¼å®½åº¦
 		if (this->Select_Char(L'A'))
 		{
 			empty_width_ = ft_face_->glyph->bitmap.width;
@@ -57,7 +57,7 @@ FT_GlyphSlot const& FreeTypeTextPrinter::Glyph() const
 
 void FreeTypeTextPrinter::SetColor(const cv::Scalar& color)
 {
-	// ÖØĞÂ³õÊ¼»¯É«²Ê²éÕÒ±í
+	// é‡æ–°åˆå§‹åŒ–è‰²å½©æŸ¥æ‰¾è¡¨
 	std::vector<cv::Mat> luts;
 	luts.emplace_back(cv::Size(256, 1), CV_8U, cv::Scalar(color[0]));
 	luts.emplace_back(cv::Size(256, 1), CV_8U, cv::Scalar(color[1]));
@@ -70,13 +70,13 @@ void FreeTypeTextPrinter::SetColor(const cv::Scalar& color)
 
 std::tuple<cv::Mat, cv::Mat, signed int, signed int> FreeTypeTextPrinter::GetCharMat() const
 {
-	// bitmap_leftÎª×ó¾à  bitmap_topÎªÍ¼ĞÎ¶¥²¿µ½»ùÏßµÄ¾àÀë»ùÏß
+	// bitmap_leftä¸ºå·¦è·  bitmap_topä¸ºå›¾å½¢é¡¶éƒ¨åˆ°åŸºçº¿çš„è·ç¦»åŸºçº¿
 	auto &bitmap = ft_face_->glyph->bitmap;
 
-	// ¾ÍµØ¹¹Ôì Ãâ³ıÊÖ¶¯ÄÚ´æ¿½±´  ×¢Òâ£¬Éú³ÉÏÂÒ»¸ö×Ö·ûÊ±ÄÚ´æ»á±»Çå³ı
+	// å°±åœ°æ„é€  å…é™¤æ‰‹åŠ¨å†…å­˜æ‹·è´  æ³¨æ„ï¼Œç”Ÿæˆä¸‹ä¸€ä¸ªå­—ç¬¦æ—¶å†…å­˜ä¼šè¢«æ¸…é™¤
 	cv::Mat char_bitmap(cv::Size(bitmap.width, bitmap.rows), CV_8U, bitmap.buffer);
 	cv::Mat char_img;
-	// ´¦Àí·Ç´òÓ¡×Ö·ûÎÊÌâ
+	// å¤„ç†éæ‰“å°å­—ç¬¦é—®é¢˜
 	if (0 != char_bitmap.rows || 0 != char_bitmap.cols)
 	{
 		char_img = char_bitmap.clone();
@@ -88,7 +88,7 @@ std::tuple<cv::Mat, cv::Mat, signed int, signed int> FreeTypeTextPrinter::GetCha
 
 	cvtColor(char_img, char_img, CV_GRAY2BGR);
 
-	cv::Mat mask;	// ÌîÍ¿ÑÚÂë  ÓÃÀ´ÍÚ³ıÄ¿±êÍ¼ÏñµÄÑÚÂëÇøÓòÒÔ±ãÈ¥³ı×ÖÌåÉ«²Ê²»±¥ºÍµ¼ÖÂ×ÖÌåÄ£ºıµÄ¸±×÷ÓÃ
+	cv::Mat mask;	// å¡«æ¶‚æ©ç   ç”¨æ¥æŒ–é™¤ç›®æ ‡å›¾åƒçš„æ©ç åŒºåŸŸä»¥ä¾¿å»é™¤å­—ä½“è‰²å½©ä¸é¥±å’Œå¯¼è‡´å­—ä½“æ¨¡ç³Šçš„å‰¯ä½œç”¨
 	bitwise_not(char_img, mask);
 
 	LUT(char_img, color_lut_, char_img);
@@ -136,7 +136,7 @@ bool FreeTypeTextPrinter::PutText(cv::Mat& img, const std::wstring& string, cv::
 		}
 		else
 		{
-			// ²Ã¼ôËã·¨
+			// è£å‰ªç®—æ³•
 
 			auto p1 = rect.tl();
 			auto p2 = rect.br();
@@ -145,7 +145,7 @@ bool FreeTypeTextPrinter::PutText(cv::Mat& img, const std::wstring& string, cv::
 			int width = rect.width;
 			int height = rect.height;
 
-			// ½ÇµãÇøÄÚÒÆ¶¯
+			// è§’ç‚¹åŒºå†…ç§»åŠ¨
 			if (p2.x > img.cols)
 			{
 				width -= p2.x - img.cols;
@@ -169,15 +169,15 @@ bool FreeTypeTextPrinter::PutText(cv::Mat& img, const std::wstring& string, cv::
 				p1.y = 0;
 			}
 
-			// Êµ¼Ê³öÇø¼ì²é
+			// å®é™…å‡ºåŒºæ£€æŸ¥
 			if (width > 0 && height > 0)
 			{
 
-				// ĞÂµÄ·ÅÖÃÇø
+				// æ–°çš„æ”¾ç½®åŒº
 				rect = cv::Rect{ p1, p2 };
 				auto rect_i = cv::Rect{ p0,rect.size() };
 
-				// ¿½±´
+				// æ‹·è´
 
 				auto roi = img(rect);
 				bitwise_and(roi, char_p.second(rect_i), roi);
@@ -185,9 +185,9 @@ bool FreeTypeTextPrinter::PutText(cv::Mat& img, const std::wstring& string, cv::
 			}
 
 		}
-		// ²»½øĞĞ×Ô¶¯»»ĞĞ
+		// ä¸è¿›è¡Œè‡ªåŠ¨æ¢è¡Œ
 
-		// ÏÂÒ»¸ö×Ö  ´Ë´¦×Ö·û¼ä¾à´ÓAÖĞ¼ÆËãµÃÀ´
+		// ä¸‹ä¸€ä¸ªå­—  æ­¤å¤„å­—ç¬¦é—´è·ä»Aä¸­è®¡ç®—å¾—æ¥
 		begin_point.x += char_p.first.size().width + character_spacing_empty_width_;
 	}
 	end_point = begin_point;
