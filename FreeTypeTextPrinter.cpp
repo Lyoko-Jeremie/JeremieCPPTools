@@ -27,6 +27,7 @@ bool FreeTypeTextPrinter::Set_Char_Size(FT_F26Dot6 char_width, FT_F26Dot6 char_h
 		if (this->Select_Char(L'A'))
 		{
 			empty_width_ = ft_face_->glyph->bitmap.width;
+			character_spacing_empty_width_ = static_cast<int>(character_spacing_ * empty_width_);
 		}
 		return true;
 	}
@@ -41,6 +42,7 @@ bool FreeTypeTextPrinter::Set_Char_Size_Fast(FT_F26Dot6 size, FT_UInt resolution
 void FreeTypeTextPrinter::Set_Character_Spacing(double character_spacing)
 {
 	character_spacing_ = character_spacing - 1.0;
+	character_spacing_empty_width_ = static_cast<int>(character_spacing_ * empty_width_);
 }
 
 bool FreeTypeTextPrinter::Select_Char(FT_ULong char_code)
@@ -101,7 +103,6 @@ bool FreeTypeTextPrinter::PutText(cv::Mat& img, const std::wstring& string, cv::
 
 bool FreeTypeTextPrinter::PutText(cv::Mat& img, const std::wstring& string, cv::Point begin_point, cv::Point& end_point)
 {
-	auto character_spacing_empty_width = character_spacing_ * empty_width_;
 	for (size_t i = 0; i != string.size(); ++i)
 	{
 		if (!this->Select_Char(string.c_str()[i]))
@@ -187,7 +188,7 @@ bool FreeTypeTextPrinter::PutText(cv::Mat& img, const std::wstring& string, cv::
 		// 不进行自动换行
 
 		// 下一个字  此处字符间距从A中计算得来
-		begin_point.x += char_p.first.size().width + character_spacing_empty_width;
+		begin_point.x += char_p.first.size().width + character_spacing_empty_width_;
 	}
 	end_point = begin_point;
 	return true;

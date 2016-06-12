@@ -62,6 +62,7 @@ private:
 	cv::Mat color_lut_{ cv::Size(256,1), CV_8UC3, cv::Scalar{ 0,0,0 } };
 	unsigned int empty_width_{ 1 };
 	double character_spacing_{ 0.1 };
+	int character_spacing_empty_width_{ 0 };
 };
 
 #endif // H_FREE_TYPE_TEXT_PRINTER_H
